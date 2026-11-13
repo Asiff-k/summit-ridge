@@ -50,7 +50,7 @@ export default function ContactPage() {
               </a>
               <a
                 href={contact.emailHref}
-                className="flex min-h-11 items-center gap-3 break-all underline-offset-4 hover:underline"
+                className="flex min-h-11 items-center gap-3 wrap-anywhere underline-offset-4 hover:underline"
               >
                 <Mail aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.5} />
                 {contact.email}

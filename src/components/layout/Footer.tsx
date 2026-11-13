@@ -12,7 +12,7 @@ export function Footer() {
   return (
     // Extra bottom padding on small screens clears the fixed call bar.
     <footer className="on-dark-section pb-24 md:pb-0">
-      <div className="container-site grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="container-site grid gap-10 py-16 sm:grid-cols-2 lg:grid-cols-[1fr_1.6fr_1fr_1.1fr]">
         <div>
           <Logo onDark />
           <p className="mt-5 max-w-xs text-on-dark-muted">{footer.blurb}</p>
@@ -28,7 +28,7 @@ export function Footer() {
               {contact.phoneDisplay}
             </a>
             <br />
-            <a href={contact.emailHref} className={`${linkClass} break-all`}>
+            <a href={contact.emailHref} className={`${linkClass} wrap-anywhere`}>
               {contact.email}
             </a>
             <p className="mt-2">
@@ -41,9 +41,12 @@ export function Footer() {
           <h2 className="type-h3 mt-8">{business.hoursHeading}</h2>
           <dl className="mt-4 space-y-1 text-on-dark-muted">
             {hours.map((entry) => (
-              <div key={entry.days} className="flex justify-between gap-4">
+              <div
+                key={entry.days}
+                className="flex flex-wrap justify-between gap-x-4"
+              >
                 <dt>{entry.days}</dt>
-                <dd className="text-right tabular-nums">{entry.hours}</dd>
+                <dd className="whitespace-nowrap tabular-nums">{entry.hours}</dd>
               </div>
             ))}
           </dl>
