@@ -51,7 +51,8 @@ Amber appears on the things a visitor can press to contact the business: "Get a 
 
 - Text on amber is always charcoal (about 7:1 contrast). White on amber fails contrast and is not allowed.
 - Star ratings, icons, badges, underlines, and section accents are charcoal or muted, not amber.
-- Aim for one amber element per viewport. The sticky mobile call bar counts as that one.
+- Two amber buttons are persistent: "Free Inspection" in the desktop header and in the mobile call bar. Beyond those, use one amber CTA per section at most.
+- Form errors use the `--destructive` red. It is a functional colour for errors only, never for decoration.
 
 ## Typography
 
@@ -84,7 +85,7 @@ Scale (mobile, then `lg` and up):
 - 4px base unit. Use the Tailwind spacing scale; prefer 4, 6, 8, 12, 16, 24.
 - Container: max width 1200px, side padding 20px mobile, 32px from `md`.
 - Section vertical padding: 64px mobile, 96px from `lg`.
-- Sections alternate off-white and white; use a charcoal band at most twice per page (for example the trust strip and the final CTA).
+- Sections alternate off-white and white; use a charcoal band at most twice per page, not counting the footer (on the home page: the hero and the storm damage band).
 - Breakpoints are Tailwind defaults. Build at 375px first.
 - Single column on mobile. Grids are two or three columns at most.
 
@@ -98,8 +99,12 @@ Scale (mobile, then `lg` and up):
 
 - **CTA button**: amber fill, charcoal text, 48px tall, 6px radius. Hover goes to `amber-hover`. One per section at most.
 - **Secondary button**: charcoal 1px outline, charcoal text, transparent fill. On dark sections, off-white outline and text.
-- **Header**: off-white, logo left, phone number and one CTA right. On mobile: logo, tap-to-call, menu.
-- **Mobile call bar**: fixed to the bottom on small screens, amber "Call now" with the phone number.
+- **Utility bar**: thin white strip above the header with the AI receptionist link. It scrolls away.
+- **Header**: sticky, off-white, logo left, nav centre, phone number and one amber "Free Inspection" CTA right. Below `lg`: logo, tap-to-call icon, menu button; the menu panel repeats the phone number and CTA.
+- **Mobile call bar**: fixed to the bottom below `md`, two equal buttons: charcoal "Call" and amber "Free Inspection".
+- **Hero**: real roof photo under a flat 80% charcoal overlay. The diagonal hairline pattern is the fallback for dark bands with no photo.
+- **Placeholders**: anything not wired up yet (chat widget slot, map embed, team photos) is a dashed 1px outline with a plain label. Demo badges carry a small outlined "Demo" tag.
+- **Accordion**: opens and closes instantly, with no height animation.
 - **Cards**: white surface, 1px border, 8px radius, 24px padding.
 - **Review card**: quote, name, neighbourhood, charcoal stars, and the "Sample review" label in small muted text, always visible.
 - **Forms**: labels above fields, 48px inputs, white fill, 1px border, charcoal focus ring. Errors in plain words beside the field.
