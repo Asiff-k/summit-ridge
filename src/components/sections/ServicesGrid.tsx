@@ -27,10 +27,13 @@ export function ServiceCards() {
                 {/* The stretched ::after makes the whole card open the service page. */}
                 <Link
                   href={`/services/${service.slug}`}
-                  aria-label={`${cta.learnMore}: ${service.name}`}
                   className="inline-flex min-h-11 items-center gap-2 font-semibold underline underline-offset-4 after:absolute after:inset-0 after:rounded-lg"
                 >
                   {cta.learnMore}
+                  <span className="sr-only">
+                    {" "}
+                    {cta.learnMoreJoin} {service.name}
+                  </span>
                   <ArrowRight aria-hidden="true" className="size-4" strokeWidth={1.5} />
                 </Link>
                 <BookButton

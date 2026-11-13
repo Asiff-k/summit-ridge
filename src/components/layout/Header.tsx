@@ -11,7 +11,6 @@ export function Logo({ onDark = false }: { onDark?: boolean }) {
   return (
     <Link
       href="/"
-      aria-label={business.name}
       className="inline-flex flex-col leading-none"
     >
       <span className="font-heading text-2xl leading-none font-bold tracking-[0.01em] uppercase">

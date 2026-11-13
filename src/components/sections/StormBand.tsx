@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { business } from "@/config/business";
 
 export function StormBand() {
-  const { stormDamage, stormAlert, cta } = business;
+  const { stormDamage, stormAlert } = business;
 
   return (
     <section className="on-dark-section section-y relative isolate">
@@ -23,7 +23,7 @@ export function StormBand() {
           <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
             <BookButton service={stormAlert.service}>{stormDamage.cta}</BookButton>
             <ButtonLink href="/storm-damage" variant="outline-on-dark">
-              {cta.learnMore}
+              {stormDamage.learnMore}
             </ButtonLink>
           </div>
         </Reveal>

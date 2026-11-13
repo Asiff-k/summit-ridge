@@ -190,6 +190,8 @@ export const business = {
     bookThis: "Book this",
     bookInspection: "Book a free inspection",
     learnMore: "Learn more",
+    /** Joins "Learn more" to a service name for screen readers and search engines. */
+    learnMoreJoin: "about",
     allServices: "See all services",
     allReviews: "Read all reviews",
     href: "/contact",
@@ -471,6 +473,7 @@ export const business = {
     heading: "Hail hit your roof?",
     text: "We will check it for free and help you through the insurance claim, one step at a time.",
     cta: "Book a storm inspection",
+    learnMore: "How storm claims work",
     image: images.stormRoof,
     steps: [
       {
