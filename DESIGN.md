@@ -124,7 +124,7 @@ One motion only: a subtle fade-up when a section first scrolls into view.
 | Stagger | 60ms between siblings, 4 items at most |
 | Trigger | Once, when about 15% of the element is visible |
 
-- Above-the-fold content renders immediately with no entrance animation.
+- The hero plays the same fade-up once on page load, in CSS only so it never waits on JavaScript. Other above-the-fold content (the header) renders immediately.
 - With `prefers-reduced-motion: reduce`, content appears with no transform and no fade.
 - Hover and focus changes are colour and shadow only, 150ms.
 
