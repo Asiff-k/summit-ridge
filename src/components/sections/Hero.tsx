@@ -41,11 +41,13 @@ export function Hero() {
           </p>
 
           <div className={`${fadeUp} mt-8 [animation-delay:180ms]`}>
-            <div className="flex flex-col gap-3 sm:flex-row sm:gap-4">
+            {/* On phones the fixed bottom bar already has Call and Text, so
+                these are hidden there to bring the estimate card up. */}
+            <div className="hidden gap-4 sm:flex">
               <CallTextButtons variant="outline-on-dark" />
             </div>
 
-            <ul className="type-small mt-8 flex flex-col gap-x-6 gap-y-2 text-on-dark sm:flex-row sm:flex-wrap sm:items-center">
+            <ul className="type-small flex flex-col sm:mt-8 gap-x-6 gap-y-2 text-on-dark sm:flex-row sm:flex-wrap sm:items-center">
               <li className="flex items-center gap-2">
                 <Stars rating={hero.rating.value} />
                 <span>{hero.rating.text}</span>
