@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Check } from "lucide-react";
 
-import { ButtonLink, CallButton } from "@/components/ButtonLink";
+import { BookButton } from "@/components/BookButton";
+import { CallTextButtons } from "@/components/ButtonLink";
 import { PageHero } from "@/components/PageHero";
 import { ProcessSteps } from "@/components/ProcessSteps";
 import { Reveal } from "@/components/Reveal";
@@ -16,7 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default function StormDamagePage() {
-  const { stormDamage, cta } = business;
+  const { stormDamage, stormAlert } = business;
   const { page } = stormDamage;
 
   return (
@@ -27,8 +28,8 @@ export default function StormDamagePage() {
         lead={page.lead}
         image={stormDamage.image}
       >
-        <ButtonLink href={cta.href}>{stormDamage.cta}</ButtonLink>
-        <CallButton variant="outline-on-dark" />
+        <BookButton service={stormAlert.service}>{stormDamage.cta}</BookButton>
+        <CallTextButtons variant="outline-on-dark" />
       </PageHero>
 
       <section className="section-y">

@@ -1,7 +1,11 @@
+import { BookingSection } from "@/components/sections/BookingSection";
+import { EstimateSection } from "@/components/sections/EstimateSection";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { FinalCta } from "@/components/sections/FinalCta";
+import { FinancingBanner } from "@/components/sections/FinancingBanner";
 import { Hero } from "@/components/sections/Hero";
 import { Projects } from "@/components/sections/Projects";
+import { QuizSection } from "@/components/sections/QuizSection";
 import { Reviews } from "@/components/sections/Reviews";
 import { ServiceAreas } from "@/components/sections/ServiceAreas";
 import { ServicesGrid } from "@/components/sections/ServicesGrid";
@@ -16,19 +20,24 @@ export default function Home() {
   return (
     <>
       <Hero />
+      <FinancingBanner />
       <StatsBar />
+      {/* Holds the #book anchor that every "Book" button on this page opens. */}
+      <BookingSection />
+      <EstimateSection />
       <ServicesGrid />
       <StormBand />
       <WhyUs />
       <Projects />
       <Reviews />
       <ServiceAreas />
+      <QuizSection />
       <FaqSection
         eyebrow={faqSection.eyebrow}
         heading={faqSection.heading}
         items={faqs}
       />
-      <FinalCta />
+      <FinalCta anchor="book-bottom" />
     </>
   );
 }

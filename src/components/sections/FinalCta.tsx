@@ -1,22 +1,37 @@
-import { ButtonLink, CallButton } from "@/components/ButtonLink";
+import { BookingWidget } from "@/components/BookingWidget";
+import { CallTextButtons } from "@/components/ButtonLink";
 import { Reveal } from "@/components/Reveal";
+import { SectionHeading } from "@/components/SectionHeading";
 import { business } from "@/config/business";
+import { BOOKING_ANCHOR } from "@/lib/prefill-store";
 
-export function FinalCta() {
-  const { finalCta, cta } = business;
+/**
+ * Closing band: the booking widget itself, not a link to another page.
+ * `anchor` is the element id. Pages without the hero-area booking section use
+ * the default, so "Book" buttons land here; the home page passes another id.
+ */
+export function FinalCta({ anchor = BOOKING_ANCHOR }: { anchor?: string }) {
+  const { finalCta, booking, services } = business;
 
   return (
-    <section className="section-y">
-      <Reveal className="container-site">
-        <div className="mx-auto flex max-w-3xl flex-col items-center text-center">
-          <h2 className="type-h2">{finalCta.heading}</h2>
-          <p className="type-lead mt-4 text-muted-foreground">{finalCta.text}</p>
-          <div className="mt-8 flex w-full flex-col gap-3 sm:w-auto sm:flex-row sm:gap-4">
-            <ButtonLink href={cta.href}>{cta.inspection}</ButtonLink>
-            <CallButton />
+    <section id={anchor} tabIndex={-1} className="section-y scroll-mt-20 outline-none">
+      <div className="container-site grid gap-10 lg:grid-cols-[5fr_7fr] lg:gap-16">
+        <Reveal>
+          <SectionHeading
+            eyebrow={finalCta.eyebrow}
+            heading={finalCta.heading}
+            text={finalCta.text}
+          />
+          <div className="mt-8 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
+            <CallTextButtons />
           </div>
-        </div>
-      </Reveal>
+        </Reveal>
+
+        <BookingWidget
+          config={booking}
+          services={services.map((service) => service.name)}
+        />
+      </div>
     </section>
   );
 }

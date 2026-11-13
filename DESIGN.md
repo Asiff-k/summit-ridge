@@ -100,11 +100,17 @@ Scale (mobile, then `lg` and up):
 - **CTA button**: amber fill, charcoal text, 48px tall, 6px radius. Hover goes to `amber-hover`. One per section at most.
 - **Secondary button**: charcoal 1px outline, charcoal text, transparent fill. On dark sections, off-white outline and text.
 - **Utility bar**: thin white strip above the header with the AI receptionist link. It scrolls away.
-- **Header**: sticky, off-white, logo left, nav centre, phone number and one amber "Free Inspection" CTA right. Below `lg`: logo, tap-to-call icon, menu button; the menu panel repeats the phone number and CTA.
-- **Mobile call bar**: fixed to the bottom below `md`, two equal buttons: charcoal "Call" and amber "Free Inspection".
-- **Hero**: real roof photo under a flat 80% charcoal overlay. The diagonal hairline pattern is the fallback for dark bands with no photo.
+- **Header**: sticky, off-white, logo left, nav centre, then phone number, a "Text us" link and one amber "Free Inspection" CTA that opens booking. Below `xl`: logo, tap-to-call icon, menu button; the menu panel repeats call, text and book.
+- **Mobile call bar**: fixed to the bottom below `md`, three equal buttons: charcoal "Call", outlined "Text" and amber "Book".
+- **Hero**: split layout over a real roof photo with a flat 80% charcoal overlay. Copy on the left, a white "Get your roof estimate" card on the right with the address as its only field. The diagonal hairline pattern is the fallback for dark bands with no photo.
 - **Placeholders**: anything not wired up yet (chat widget slot, map embed, team photos) is a dashed 1px outline with a plain label. Demo badges carry a small outlined "Demo" tag.
-- **Accordion**: opens and closes instantly, with no height animation.
+- **Accordion**: smooth height open and close; the plus icon rotates into a cross (see Motion).
+- **Storm alert strip**: thin charcoal strip above everything, shown only while `stormAlert.active` is true in `business.ts`.
+- **Widget cards** (booking, estimate form, estimator, quiz, ZIP checker): white or off-white card, 1px border, 8px radius. Choices are 48px-tall outlined buttons that fill charcoal when selected. The amber button is the single final action of each widget.
+- **Progress bar**: 8px charcoal bar on a hairline track. It changes instantly between steps.
+- **Before/after slider**: 4:3 photo pair with a white divider and a 44px round handle. It is a native range input, so it works by drag, touch and arrow keys.
+- **AI call card**: charcoal phone mock-up, labelled "Demo call". The phone frame is the one place a radius above 8px is allowed (28px), because it depicts a device.
+- **Demo labels**: sample reviews, sample projects, the example financing figure, the demo alert, the demo call and demo bookings all carry a visible plain-text label. Never remove them on the demo site.
 - **Cards**: white surface, 1px border, 8px radius, 24px padding.
 - **Review card**: quote, name, neighbourhood, charcoal stars, and the "Sample review" label in small muted text, always visible.
 - **Forms**: labels above fields, 48px inputs, white fill, 1px border, charcoal focus ring. Errors in plain words beside the field.
@@ -118,7 +124,7 @@ Scale (mobile, then `lg` and up):
 
 ## Motion
 
-One motion only: a subtle fade-up when a section first scrolls into view.
+The base motion is a subtle fade-up when a section first scrolls into view.
 
 | Property | Value |
 |---|---|
@@ -130,8 +136,21 @@ One motion only: a subtle fade-up when a section first scrolls into view.
 | Trigger | Once, when about 15% of the element is visible |
 
 - The hero plays the same fade-up once on page load, in CSS only so it never waits on JavaScript. Other above-the-fold content (the header) renders immediately.
-- With `prefers-reduced-motion: reduce`, content appears with no transform and no fade.
-- Hover and focus changes are colour and shadow only, 150ms.
+- The demo call transcript uses this same fade-up for each new line. It only runs while on screen and has a pause button.
+
+Five more motions are allowed, and only these:
+
+| Motion | Where | Spec |
+|---|---|---|
+| Count-up | Stats bar numbers | Count from zero to the final value once on scroll into view, 1200ms, ease-out. The server renders the final number. |
+| Accordion height | FAQ | Height opens and closes over 200ms; the plus icon rotates 45 degrees into a cross. |
+| Header shrink | Sticky header | After 24px of scroll the header loses 16px of height and gains the card shadow, 200ms. |
+| Checkmark draw | Booking and estimate confirmation | The circle and tick stroke draw once, 400ms each. |
+| Card lift | Service cards only | 4px up with the card shadow on hover, 150ms. |
+
+- Everything else changes instantly: progress bars, step changes, sliders, tabs, the mobile menu.
+- Hover and focus changes are otherwise colour and shadow only, 150ms.
+- With `prefers-reduced-motion: reduce`, none of the above runs. Content appears in its final state, stats show their final numbers, and the demo call shows its whole transcript without looping. A global rule in `globals.css` enforces this.
 
 ## Do
 
@@ -150,7 +169,7 @@ One motion only: a subtle fade-up when a section first scrolls into view.
 - Don't use gradients, glassmorphism, glows, or blurred colour blobs.
 - Don't use amber for decoration: no amber icons, stars, headings, borders, or backgrounds.
 - Don't put white text on amber.
-- Don't add parallax, scroll-jacking, carousels that auto-advance, counters that tick up, or hover lift-and-scale effects.
+- Don't add parallax, scroll-jacking, smooth-scroll animation, carousels that auto-advance, confetti, shine or shake effects, or any hover lift or scale beyond the 4px service card lift.
 - Don't use SaaS patterns: pill badges above the hero, bento grids, floating dashboard mockups, logo marquees, pricing tiers, dark mode toggles.
 - Don't use stock photos of models in hard hats shaking hands.
 - Don't use pill-shaped buttons or radii above 8px.

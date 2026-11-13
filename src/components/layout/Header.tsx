@@ -1,8 +1,10 @@
 import Link from "next/link";
-import { Headset, Phone } from "lucide-react";
+import { CloudLightning, Headset, Phone } from "lucide-react";
 
-import { ButtonLink } from "@/components/ButtonLink";
+import { BookButton } from "@/components/BookButton";
+import { TextLink } from "@/components/ButtonLink";
 import { MobileMenu } from "@/components/layout/MobileMenu";
+import { StickyHeader } from "@/components/layout/StickyHeader";
 import { business } from "@/config/business";
 
 export function Logo({ onDark = false }: { onDark?: boolean }) {
@@ -24,11 +26,42 @@ export function Logo({ onDark = false }: { onDark?: boolean }) {
   );
 }
 
+/** Owner-editable storm banner. Renders nothing unless stormAlert.active is true. */
+function StormAlert() {
+  const { stormAlert } = business;
+  if (!stormAlert.active) return null;
+
+  return (
+    <div role="region" aria-label={stormAlert.demoLabel} className="on-dark-section">
+      <div className="container-site flex flex-col gap-x-5 gap-y-1 py-3 sm:flex-row sm:items-center sm:justify-between">
+        <p className="type-small flex items-start gap-3">
+          <CloudLightning aria-hidden="true" className="mt-0.5 size-4 shrink-0" strokeWidth={1.5} />
+          <span>
+            <span className="type-eyebrow mr-2 border border-on-dark/40 px-1.5 py-0.5 text-on-dark-muted">
+              {stormAlert.demoLabel}
+            </span>
+            {stormAlert.message}
+          </span>
+        </p>
+        <BookButton
+          variant="link"
+          service={stormAlert.service}
+          className="type-small shrink-0 pl-7 whitespace-nowrap sm:pl-0"
+        >
+          {stormAlert.cta}
+        </BookButton>
+      </div>
+    </div>
+  );
+}
+
 export function Header() {
   const { nav, cta, contact, ai, utilityBar } = business;
 
   return (
     <>
+      <StormAlert />
+
       {/* Utility bar. Scrolls away; the header below it sticks. */}
       <div className="border-b border-border bg-card">
         <div className="container-site flex min-h-11 items-center justify-center gap-6 sm:justify-between">
@@ -51,11 +84,11 @@ export function Header() {
         </div>
       </div>
 
-      <header className="sticky top-0 z-40 border-b border-border bg-background shadow-card">
-        <div className="container-site relative flex h-16 items-center justify-between gap-4 lg:h-20">
+      <StickyHeader>
+        <div className="container-site relative flex h-16 items-center justify-between gap-4 transition-[height] duration-200 group-data-[scrolled=true]/header:h-14 xl:h-20 xl:group-data-[scrolled=true]/header:h-16">
           <Logo />
 
-          <nav aria-label="Main" className="hidden lg:block">
+          <nav aria-label="Main" className="hidden xl:block">
             <ul className="flex items-center gap-7">
               {nav.map((item) => (
                 <li key={item.href}>
@@ -70,7 +103,7 @@ export function Header() {
             </ul>
           </nav>
 
-          <div className="hidden items-center gap-5 lg:flex">
+          <div className="hidden items-center gap-5 xl:flex">
             <a
               href={contact.phoneHref}
               className="inline-flex min-h-11 items-center gap-2 font-semibold tabular-nums underline-offset-4 hover:underline"
@@ -78,19 +111,21 @@ export function Header() {
               <Phone aria-hidden="true" className="size-4" strokeWidth={1.5} />
               {contact.phoneDisplay}
             </a>
-            <ButtonLink href={cta.href}>{cta.inspection}</ButtonLink>
+            <TextLink />
+            <BookButton>{cta.inspection}</BookButton>
           </div>
 
           <MobileMenu
             nav={nav}
             phoneHref={contact.phoneHref}
             phoneDisplay={contact.phoneDisplay}
+            smsHref={contact.smsHref}
             callLabel={cta.call}
+            textLabel={cta.text}
             ctaLabel={cta.inspection}
-            ctaHref={cta.href}
           />
         </div>
-      </header>
+      </StickyHeader>
     </>
   );
 }

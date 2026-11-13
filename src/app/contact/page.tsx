@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Mail, MapPin, Phone } from "lucide-react";
 
+import { TextLink } from "@/components/ButtonLink";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { PageHero } from "@/components/PageHero";
 import { business } from "@/config/business";
@@ -48,6 +49,7 @@ export default function ContactPage() {
                 <Phone aria-hidden="true" className="size-5" strokeWidth={1.5} />
                 {contact.phoneDisplay}
               </a>
+              <TextLink className="pl-8" />
               <a
                 href={contact.emailHref}
                 className="flex min-h-11 items-center gap-3 wrap-anywhere underline-offset-4 hover:underline"

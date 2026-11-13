@@ -2,6 +2,7 @@ import {
   Building2,
   ClipboardCheck,
   CloudLightning,
+  Droplet,
   Droplets,
   HardHat,
   Handshake,
@@ -31,6 +32,7 @@ const icons: Record<IconName, LucideIcon> = {
   honest: Handshake,
   family: Users,
   safety: HardHat,
+  leak: Droplet,
 };
 
 export function Icon({

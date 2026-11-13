@@ -22,7 +22,8 @@ export type IconName =
   | "clean"
   | "honest"
   | "family"
-  | "safety";
+  | "safety"
+  | "leak";
 
 export type ImageAsset = {
   src: string;
@@ -116,6 +117,14 @@ const images = {
     src: photo("1787094497609-5efe6029b950"),
     alt: "A white two-storey home with a metal roof and front porch",
   },
+  greyHome: {
+    src: photo("1586982599726-11708daaceca"),
+    alt: "A grey and white home with a metal roof and two brick chimneys",
+  },
+  roofInProgress: {
+    src: photo("1763665814485-a0a1b6f51ed7"),
+    alt: "Roofers laying new roofing over bare decking",
+  },
 } satisfies Record<string, ImageAsset>;
 
 export const business = {
@@ -134,6 +143,7 @@ export const business = {
     phoneE164: "+12145550142",
     email: "hello@summitridgeroofing.example",
     emailHref: "mailto:hello@summitridgeroofing.example",
+    smsHref: "sms:+12145550142",
   },
 
   address: {
@@ -174,6 +184,11 @@ export const business = {
     inspection: "Free Inspection",
     call: "Call now",
     callShort: "Call",
+    text: "Text us",
+    textShort: "Text",
+    book: "Book",
+    bookThis: "Book this",
+    bookInspection: "Book a free inspection",
     learnMore: "Learn more",
     allServices: "See all services",
     allReviews: "Read all reviews",
@@ -202,13 +217,22 @@ export const business = {
       text: "4.9 from 300+ sample reviews",
     },
     trust: ["Licensed & Insured", "Since 2008"],
+    estimateCard: {
+      heading: "Get your roof estimate",
+      text: "Start with your address. It takes about a minute.",
+      addressLabel: "Property address",
+      addressPlaceholder: "Street address and ZIP",
+      submit: "Start my estimate",
+      note: "No obligation. We never share your details.",
+    },
   },
 
+  /** `value` counts up from zero on scroll; `suffix` is appended as written. */
   stats: [
-    { value: "18+", label: "Years in business" },
-    { value: "2,400+", label: "Roofs completed" },
-    { value: "10", label: "Year workmanship warranty" },
-    { value: "24 hr", label: "Storm response time" },
+    { value: 18, suffix: "+", label: "Years in business" },
+    { value: 2400, suffix: "+", label: "Roofs completed" },
+    { value: 10, suffix: "", label: "Year workmanship warranty" },
+    { value: 24, suffix: " hr", label: "Storm response time" },
   ],
 
   servicesSection: {
@@ -564,14 +588,49 @@ export const business = {
   projects: {
     eyebrow: "Our work",
     heading: "Recent projects",
-    sampleNote: "Sample project photos for this demo site.",
+    text: "Drag the handle to compare before and after.",
+    beforeLabel: "Before",
+    afterLabel: "After",
+    sampleLabel: "Sample project",
+    sampleNote:
+      "Sample projects for this demo site. The before and after photos are stock images and do not show the same house.",
     items: [
-      { image: images.shingleHome, neighborhood: "Lake Highlands", jobType: "Roof replacement" },
-      { image: images.shingleRooflines, neighborhood: "Plano", jobType: "Architectural shingle roof" },
-      { image: images.tearOff, neighborhood: "Richardson", jobType: "Hail damage tear-off" },
-      { image: images.metalRoof, neighborhood: "Irving", jobType: "Standing seam metal roof" },
-      { image: images.repair, neighborhood: "Garland", jobType: "Roof repair" },
-      { image: images.modernHome, neighborhood: "Frisco", jobType: "Roof inspection" },
+      {
+        before: images.tearOff,
+        after: images.shingleHome,
+        neighborhood: "Lake Highlands",
+        jobType: "Roof replacement",
+      },
+      {
+        before: images.stormRoof,
+        after: images.shingleRooflines,
+        neighborhood: "Plano",
+        jobType: "Hail damage replacement",
+      },
+      {
+        before: images.roofInProgress,
+        after: images.greyHome,
+        neighborhood: "Richardson",
+        jobType: "Metal roof installation",
+      },
+      {
+        before: images.crewPair,
+        after: images.metalRoof,
+        neighborhood: "Irving",
+        jobType: "Standing seam metal roof",
+      },
+      {
+        before: images.repair,
+        after: images.modernHome,
+        neighborhood: "Garland",
+        jobType: "Roof repair",
+      },
+      {
+        before: images.crewCloseUp,
+        after: images.whiteHome,
+        neighborhood: "Frisco",
+        jobType: "Roof replacement",
+      },
     ],
   },
 
@@ -704,8 +763,288 @@ export const business = {
   ] satisfies Faq[],
 
   finalCta: {
+    eyebrow: "Book online",
     heading: "Ready when you are",
     text: "Free inspection, written report, no pressure.",
+  },
+
+  /** Owner-editable banner. Shown site-wide only while `active` is true. */
+  stormAlert: {
+    active: true,
+    demoLabel: "Demo alert",
+    message:
+      "Hail reported in Plano and Frisco this week. Free storm checks, usually within 24 hours.",
+    cta: "Book a storm check",
+    service: "Storm & Hail Damage",
+  },
+
+  financing: {
+    active: true,
+    exampleLabel: "Example",
+    lead: "Roof replacement from",
+    amount: "$149",
+    period: "/month",
+    note: "Example payment only. Actual terms depend on the lender and your approval.",
+    cta: "Ask about financing",
+    service: "Roof Replacement",
+  },
+
+  /** Three-step estimate request. Contact details are asked for last. */
+  estimateForm: {
+    eyebrow: "Free estimate",
+    heading: "Tell us about your roof",
+    text: "Three quick steps. We will call you back with a time for a free inspection.",
+    stepLabel: "Step {current} of {total}",
+    steps: ["Address", "Problem", "Your details"],
+    addressLabel: "Property address",
+    addressPlaceholder: "Street address and ZIP",
+    problemLegend: "What is going on with your roof?",
+    problems: [
+      { key: "leak", label: "Leak", icon: "leak", service: "Roof Repair" },
+      { key: "storm", label: "Hail or storm", icon: "storm", service: "Storm & Hail Damage" },
+      {
+        key: "replacement",
+        label: "Full replacement",
+        icon: "replacement",
+        service: "Roof Replacement",
+      },
+      { key: "inspection", label: "Inspection", icon: "inspection", service: "Roof Inspections" },
+      { key: "gutters", label: "Gutters", icon: "gutters", service: "Gutters" },
+      { key: "commercial", label: "Commercial", icon: "commercial", service: "Commercial Roofing" },
+    ] satisfies { key: string; label: string; icon: IconName; service: string }[],
+    photoLabel: "Photo of the damage",
+    photoHint: "One image, up to 8 MB.",
+    photoTooLarge: "That photo is over 8 MB. Please choose a smaller one.",
+    next: "Next",
+    back: "Back",
+    submit: "Send my request",
+    submitting: "Sending",
+    successHeading: "Got it. We will be in touch",
+    successMessage:
+      "We will call you within one business day. Want to skip the wait? Pick a time now.",
+    errorMessage:
+      "Something went wrong and your request was not sent. Please try again or call us.",
+  },
+
+  /**
+   * Slider estimator. No satellite lookup: roof area is estimated as
+   * home size / stories x roofFactor, then priced per square foot.
+   * Tune every number here per client.
+   */
+  estimator: {
+    eyebrow: "Price guide",
+    heading: "What might a new roof cost?",
+    text: "Move the sliders for a rough idea. Every roof is different, so we confirm the price after a free inspection.",
+    currency: "$",
+    homeSize: {
+      label: "Home size",
+      unit: "sq ft",
+      min: 1000,
+      max: 5000,
+      step: 100,
+      default: 2200,
+    },
+    storiesLabel: "Stories",
+    stories: [
+      { label: "1", count: 1, priceMultiplier: 1 },
+      { label: "2", count: 2, priceMultiplier: 1.1 },
+      { label: "3", count: 3, priceMultiplier: 1.2 },
+    ],
+    /** Allows for roof pitch, overhangs, and waste. */
+    roofFactor: 1.3,
+    materialLabel: "Material",
+    materials: [
+      { key: "three-tab", label: "3-tab shingle", lowPerSqFt: 4.0, highPerSqFt: 5.5 },
+      { key: "architectural", label: "Architectural shingle", lowPerSqFt: 4.75, highPerSqFt: 7.0 },
+      { key: "metal", label: "Metal", lowPerSqFt: 9.0, highPerSqFt: 14.0 },
+    ],
+    defaultMaterial: "architectural",
+    roundTo: 100,
+    resultLabel: "Typical range, final quote after inspection",
+    roofAreaLabel: "Estimated roof area",
+    cta: "Book a free inspection",
+    service: "Roof Replacement",
+  },
+
+  /**
+   * Inline booking. Working hours and slot length drive the time slots.
+   * `day` is 0 (Sunday) to 6 (Saturday). Availability is mocked for now.
+   */
+  booking: {
+    eyebrow: "Book online",
+    heading: "Book a free inspection",
+    text: "Pick a day and a time. No phone call needed.",
+    timeZone: "America/Chicago",
+    slotMinutes: 60,
+    daysAhead: 14,
+    workingHours: [
+      { day: 1, open: "08:00", close: "17:00" },
+      { day: 2, open: "08:00", close: "17:00" },
+      { day: 3, open: "08:00", close: "17:00" },
+      { day: 4, open: "08:00", close: "17:00" },
+      { day: 5, open: "08:00", close: "17:00" },
+      { day: 6, open: "09:00", close: "13:00" },
+    ],
+    dayLegend: "1. Pick a day",
+    slotLegend: "2. Pick a time",
+    detailsLegend: "3. Your details",
+    loadingDays: "Loading available days",
+    loadingSlots: "Loading times",
+    noSlots: "No times left on this day. Please pick another.",
+    closedLabel: "Closed",
+    serviceLabel: "What do you need?",
+    defaultService: "Roof Inspections",
+    addressLabel: "Property address",
+    confirm: "Confirm booking",
+    confirming: "Booking",
+    confirmedHeading: "See you {day} at {time}",
+    confirmedText:
+      "Your free inspection is booked. We will call the number you gave us if anything changes.",
+    demoNote: "Demo booking. Times are sample availability and nothing is sent.",
+    bookAnother: "Book another time",
+    loadError: "We could not load the calendar. Please try again or call us.",
+    slotTakenError: "That time was just taken. Please pick another.",
+    submitError:
+      "Something went wrong and your booking was not saved. Please try again or call us.",
+  },
+
+  /** Animated demo transcript for the AI receptionist card. */
+  aiCall: {
+    eyebrow: "Never miss a call",
+    heading: "Every call answered, day or night",
+    text: "Our AI receptionist picks up when the office is closed, checks the calendar, and books the inspection.",
+    demoLabel: "Demo call",
+    callerName: "Homeowner",
+    agentName: "AI receptionist",
+    pause: "Pause demo call",
+    play: "Play demo call",
+    transcript: [
+      { speaker: "agent", text: "Summit Ridge Roofing, how can I help?" },
+      { speaker: "caller", text: "We had hail last night and I think the roof is damaged." },
+      { speaker: "agent", text: "Sorry to hear that. Is any water coming inside right now?" },
+      { speaker: "caller", text: "No leaks so far. There are dents on the gutters though." },
+      {
+        speaker: "agent",
+        text: "I can get someone out for a free inspection. I have Thursday at 10am or Friday at 2pm.",
+      },
+      { speaker: "caller", text: "Thursday at 10 works." },
+      { speaker: "agent", text: "Done. I will text you a confirmation now." },
+    ] satisfies { speaker: "agent" | "caller"; text: string }[],
+    outcome: "Inspection booked, Thursday 10am",
+  },
+
+  /** ZIP codes we serve. The checker answers from this list only. */
+  coverage: {
+    heading: "Check your ZIP code",
+    label: "ZIP code",
+    placeholder: "75204",
+    submit: "Check",
+    invalid: "Please enter a 5-digit ZIP code.",
+    yes: "Yes, we cover {zip}",
+    yesText: "We can usually inspect within a couple of days.",
+    no: "We do not cover {zip} yet",
+    noText: "Call us and we will point you to a roofer who does.",
+    cta: "Book a free inspection",
+    // prettier-ignore
+    zips: [
+      // Dallas
+      "75201", "75202", "75203", "75204", "75205", "75206", "75207", "75208", "75209", "75210",
+      "75211", "75212", "75214", "75215", "75216", "75217", "75218", "75219", "75220", "75223",
+      "75224", "75225", "75226", "75227", "75228", "75229", "75230", "75231", "75232", "75233",
+      "75234", "75235", "75238", "75240", "75243", "75244", "75248", "75252", "75254",
+      // Plano
+      "75023", "75024", "75025", "75074", "75075", "75093",
+      // Irving
+      "75038", "75039", "75060", "75061", "75062", "75063",
+      // Garland
+      "75040", "75041", "75042", "75043", "75044",
+      // Richardson
+      "75080", "75081", "75082",
+      // Mesquite
+      "75149", "75150", "75181",
+      // Frisco
+      "75033", "75034", "75035",
+      // Arlington
+      "76001", "76002", "76006", "76010", "76011", "76012", "76013", "76014", "76015", "76016",
+      "76017", "76018",
+    ],
+  },
+
+  /** Five questions. Higher points mean more risk. Results are matched on total points. */
+  quiz: {
+    eyebrow: "Not sure?",
+    heading: "Roof health check",
+    text: "Five quick questions. Get a score and a plain recommendation.",
+    questionLabel: "Question {current} of {total}",
+    back: "Back",
+    restart: "Start again",
+    scoreLabel: "Roof health score",
+    scoreOutOf: "out of 100",
+    disclaimer: "A rough guide only. It is not a substitute for an inspection.",
+    cta: "Book a free inspection",
+    questions: [
+      {
+        question: "How old is your roof?",
+        options: [
+          { label: "Under 5 years", points: 0 },
+          { label: "5 to 12 years", points: 1 },
+          { label: "13 to 20 years", points: 2 },
+          { label: "Over 20 years, or not sure", points: 3 },
+        ],
+      },
+      {
+        question: "Can you see any damage from the ground?",
+        options: [
+          { label: "No, it looks fine", points: 0 },
+          { label: "A few shingles look worn", points: 1 },
+          { label: "Missing, curled, or lifted shingles", points: 3 },
+        ],
+      },
+      {
+        question: "Any leaks or water stains inside?",
+        options: [
+          { label: "None", points: 0 },
+          { label: "An old stain that has not changed", points: 1 },
+          { label: "A new stain or an active leak", points: 3 },
+        ],
+      },
+      {
+        question: "When was the roof last inspected?",
+        options: [
+          { label: "Within the last year", points: 0 },
+          { label: "One to three years ago", points: 1 },
+          { label: "Longer ago, or never", points: 2 },
+        ],
+      },
+      {
+        question: "Has hail or high wind hit your area recently?",
+        options: [
+          { label: "Not that I know of", points: 0 },
+          { label: "Yes, a while back", points: 1 },
+          { label: "Yes, in the last few months", points: 3 },
+        ],
+      },
+    ],
+    results: [
+      {
+        maxPoints: 3,
+        title: "Looking good",
+        text: "Nothing here suggests a problem. A yearly inspection will keep it that way.",
+        service: "Roof Inspections",
+      },
+      {
+        maxPoints: 8,
+        title: "Worth a look",
+        text: "There are a few signs worth checking before they turn into leaks. A free inspection will tell you for sure.",
+        service: "Roof Inspections",
+      },
+      {
+        maxPoints: 99,
+        title: "Get it checked soon",
+        text: "Your answers point to possible damage. Book a free inspection, and call us straight away if water is coming in.",
+        service: "Roof Repair",
+      },
+    ],
   },
 
   about: {

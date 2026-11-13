@@ -35,6 +35,32 @@
   }
 }
 
+/* Confirmation checkmark: the stroke draws itself once. Needs pathLength="1". */
+@utility draw-stroke {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: draw-stroke 400ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes draw-stroke {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* Reduced motion: nothing animates, anywhere. Final states apply at once. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
 /* Faint diagonal hairlines for charcoal sections. */
 @utility bg-diagonal-lines {
   background-image: repeating-linear-gradient(

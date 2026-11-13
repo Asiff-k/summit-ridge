@@ -1,33 +1,38 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Phone, X } from "lucide-react";
+import { Menu, MessageSquare, Phone, X } from "lucide-react";
 import { useState } from "react";
+
+import { BookButton } from "@/components/BookButton";
+import { buttonClasses } from "@/components/button-styles";
 
 type NavItem = { label: string; href: string };
 
-/** Phone button and hamburger menu shown below the lg breakpoint. */
+/** Phone button and hamburger menu shown below the xl breakpoint. */
 export function MobileMenu({
   nav,
   phoneHref,
   phoneDisplay,
+  smsHref,
   callLabel,
+  textLabel,
   ctaLabel,
-  ctaHref,
 }: {
   nav: readonly NavItem[];
   phoneHref: string;
   phoneDisplay: string;
+  smsHref: string;
   callLabel: string;
+  textLabel: string;
   ctaLabel: string;
-  ctaHref: string;
 }) {
   const [open, setOpen] = useState(false);
   const close = () => setOpen(false);
 
   return (
     <div
-      className="flex items-center gap-1 lg:hidden"
+      className="flex items-center gap-1 xl:hidden"
       onKeyDown={(event) => {
         if (event.key === "Escape") close();
       }}
@@ -75,23 +80,18 @@ export function MobileMenu({
               ))}
             </ul>
 
-            <div className="mt-5 grid gap-3 sm:grid-cols-2">
-              <a
-                href={phoneHref}
-                onClick={close}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-md border border-foreground px-6 font-semibold"
-              >
+            {/* Clicks bubble up here, so any of these also closes the menu. */}
+            <div className="mt-5 grid gap-3 sm:grid-cols-3" onClick={close}>
+              <a href={phoneHref} className={buttonClasses("outline")}>
                 <Phone aria-hidden="true" className="size-4" strokeWidth={1.5} />
                 <span>{callLabel}</span>
                 <span className="tabular-nums">{phoneDisplay}</span>
               </a>
-              <Link
-                href={ctaHref}
-                onClick={close}
-                className="inline-flex h-12 items-center justify-center rounded-md bg-cta px-6 font-semibold text-cta-foreground hover:bg-cta-hover"
-              >
-                {ctaLabel}
-              </Link>
+              <a href={smsHref} className={buttonClasses("outline")}>
+                <MessageSquare aria-hidden="true" className="size-4" strokeWidth={1.5} />
+                {textLabel}
+              </a>
+              <BookButton>{ctaLabel}</BookButton>
             </div>
           </nav>
         </div>

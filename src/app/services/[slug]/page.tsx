@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { Check } from "lucide-react";
 
-import { ButtonLink, CallButton } from "@/components/ButtonLink";
+import { BookButton } from "@/components/BookButton";
+import { CallTextButtons } from "@/components/ButtonLink";
 import { PageHero } from "@/components/PageHero";
 import { ProcessSteps } from "@/components/ProcessSteps";
 import { Reveal } from "@/components/Reveal";
@@ -53,8 +54,8 @@ export default async function ServicePage({
         lead={service.summary}
         image={service.image}
       >
-        <ButtonLink href={cta.href}>{cta.primary}</ButtonLink>
-        <CallButton variant="outline-on-dark" />
+        <BookButton service={service.name}>{cta.bookInspection}</BookButton>
+        <CallTextButtons variant="outline-on-dark" />
       </PageHero>
 
       <section className="section-y">

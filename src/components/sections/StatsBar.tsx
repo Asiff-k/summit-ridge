@@ -1,3 +1,4 @@
+import { CountUp } from "@/components/CountUp";
 import { business } from "@/config/business";
 
 export function StatsBar() {
@@ -8,7 +9,7 @@ export function StatsBar() {
           <div key={stat.label} className="flex flex-col-reverse gap-1">
             <dt className="type-small text-muted-foreground">{stat.label}</dt>
             <dd className="font-heading text-[2.5rem] leading-none font-bold tabular-nums lg:text-5xl">
-              {stat.value}
+              <CountUp value={stat.value} suffix={stat.suffix} />
             </dd>
           </div>
         ))}

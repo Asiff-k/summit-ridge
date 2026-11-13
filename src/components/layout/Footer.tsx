@@ -1,5 +1,6 @@
 import Link from "next/link";
 
+import { TextLink } from "@/components/ButtonLink";
 import { Logo } from "@/components/layout/Header";
 import { business } from "@/config/business";
 
@@ -27,6 +28,7 @@ export function Footer() {
             >
               {contact.phoneDisplay}
             </a>
+            <TextLink className="ml-5 text-on-dark" />
             <br />
             <a href={contact.emailHref} className={`${linkClass} wrap-anywhere`}>
               {contact.email}

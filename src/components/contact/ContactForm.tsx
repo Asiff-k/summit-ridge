@@ -1,7 +1,10 @@
 "use client";
 
 import { CircleCheck } from "lucide-react";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useState, type FormEvent } from "react";
+
+import { inputClass } from "@/components/button-styles";
+import { Field, Honeypot, honeypotValue } from "@/components/form/Field";
 
 type FieldName =
   | "name"
@@ -52,42 +55,6 @@ function validate(values: Values): Errors {
   }
 
   return errors;
-}
-
-const inputClass =
-  "h-12 w-full rounded-md border border-input bg-card px-3 text-base text-foreground aria-invalid:border-destructive";
-
-function Field({
-  id,
-  label,
-  optional = false,
-  error,
-  children,
-}: {
-  id: string;
-  label: string;
-  optional?: boolean;
-  error?: string;
-  children: ReactNode;
-}) {
-  return (
-    <div>
-      <label htmlFor={id} className="mb-2 block font-semibold">
-        {label}
-        {optional ? (
-          <span className="type-small ml-2 font-normal text-muted-foreground">
-            Optional
-          </span>
-        ) : null}
-      </label>
-      {children}
-      {error ? (
-        <p id={`${id}-error`} className="type-small mt-2 font-medium text-destructive">
-          {error}
-        </p>
-      ) : null}
-    </div>
-  );
 }
 
 export function ContactForm({
@@ -152,7 +119,11 @@ export function ContactForm({
       const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          ...values,
+          formType: "contact",
+          company: honeypotValue(event.currentTarget),
+        }),
       });
       if (!response.ok) throw new Error(`Request failed: ${response.status}`);
       setStatus("sent");
@@ -178,8 +149,9 @@ export function ContactForm({
     <form
       noValidate
       onSubmit={handleSubmit}
-      className="rounded-lg border border-border bg-card p-6 lg:p-8"
+      className="relative rounded-lg border border-border bg-card p-6 lg:p-8"
     >
+      <Honeypot />
       <div className="grid gap-5 sm:grid-cols-2">
         <Field id="name" label="Name" error={errors.name}>
           <input
