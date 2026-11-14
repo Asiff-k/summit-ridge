@@ -110,29 +110,34 @@ export function AiCallCard({ config }: { config: AiCallConfig }) {
       <div
         aria-hidden="true"
         className={cn(
-          "flex flex-col justify-end gap-2 overflow-hidden rounded-[1.25rem] bg-on-dark/5 p-3",
+          "flex flex-col justify-end overflow-hidden rounded-[1.25rem] bg-on-dark/5 p-3",
           reducedMotion ? "min-h-[26rem]" : "h-[26rem]",
         )}
       >
-        {lines.map((line) => (
-          <p
-            key={line.text}
-            className={cn(
-              "type-small animate-fade-up max-w-[85%] rounded-lg px-3 py-2 motion-reduce:animate-none",
-              line.speaker === "agent"
-                ? "self-start bg-surface text-charcoal"
-                : "self-end border border-on-dark/40 text-on-dark",
-            )}
-          >
-            {line.text}
-          </p>
-        ))}
-        {showOutcome ? (
-          <p className="type-small animate-fade-up mt-1 flex items-center gap-2 rounded-lg border border-on-dark/40 px-3 py-3 font-semibold motion-reduce:animate-none">
-            <CircleCheck aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.5} />
-            {config.outcome}
-          </p>
-        ) : null}
+        {/* Reads from the top while the lines fit. mb-auto takes the spare
+            space; once the transcript overflows it collapses to zero and
+            justify-end keeps the newest line in view, like a phone does. */}
+        <div className="mb-auto flex flex-col gap-2">
+          {lines.map((line) => (
+            <p
+              key={line.text}
+              className={cn(
+                "type-small animate-fade-up max-w-[85%] rounded-lg px-3 py-2 motion-reduce:animate-none",
+                line.speaker === "agent"
+                  ? "self-start bg-surface text-charcoal"
+                  : "self-end border border-on-dark/40 text-on-dark",
+              )}
+            >
+              {line.text}
+            </p>
+          ))}
+          {showOutcome ? (
+            <p className="type-small animate-fade-up mt-1 flex items-center gap-2 rounded-lg border border-on-dark/40 px-3 py-3 font-semibold motion-reduce:animate-none">
+              <CircleCheck aria-hidden="true" className="size-5 shrink-0" strokeWidth={1.5} />
+              {config.outcome}
+            </p>
+          ) : null}
+        </div>
       </div>
     </div>
   );
