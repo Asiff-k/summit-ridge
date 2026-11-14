@@ -1145,7 +1145,7 @@ export const business = {
   },
 
   seo: {
-    siteUrl: "https://summitridgeroofing.example",
+    siteUrl: "https://summit-ridge-zeta.vercel.app",
     title: "Summit Ridge Roofing | Roof Repair and Replacement in Dallas, TX",
     titleTemplate: "%s | Summit Ridge Roofing",
     description:

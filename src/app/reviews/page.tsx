@@ -4,11 +4,12 @@ import { PageHero } from "@/components/PageHero";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { ReviewGrid } from "@/components/sections/Reviews";
 import { business } from "@/config/business";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: business.seo.pages.reviews.title,
-  description: business.seo.pages.reviews.description,
-};
+export const metadata: Metadata = pageMetadata({
+  path: "/reviews",
+  ...business.seo.pages.reviews,
+});
 
 export default function ReviewsPage() {
   const { reviewsSection, reviews } = business;

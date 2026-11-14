@@ -11,6 +11,7 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { business, type Service } from "@/config/business";
+import { pageMetadata, servicePath } from "@/lib/seo";
 
 const services: readonly Service[] = business.services;
 
@@ -29,10 +30,11 @@ export async function generateMetadata({
   const service = findService(slug);
   if (!service) return {};
 
-  return {
+  return pageMetadata({
+    path: servicePath(service.slug),
     title: service.name,
     description: `${service.summary} ${service.description}`,
-  };
+  });
 }
 
 export default async function ServicePage({

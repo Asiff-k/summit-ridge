@@ -5,11 +5,12 @@ import { TextLink } from "@/components/ButtonLink";
 import { ContactForm } from "@/components/contact/ContactForm";
 import { PageHero } from "@/components/PageHero";
 import { business } from "@/config/business";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: business.seo.pages.contact.title,
-  description: business.seo.pages.contact.description,
-};
+export const metadata: Metadata = pageMetadata({
+  path: "/contact",
+  ...business.seo.pages.contact,
+});
 
 export default function ContactPage() {
   const { contactPage, contact, address, hours, services } = business;

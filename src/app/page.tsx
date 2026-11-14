@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Suspense, type ReactNode } from "react";
 
 import { BookingSection } from "@/components/sections/BookingSection";
@@ -15,6 +16,12 @@ import { StatsBar } from "@/components/sections/StatsBar";
 import { StormBand } from "@/components/sections/StormBand";
 import { WhyUs } from "@/components/sections/WhyUs";
 import { business } from "@/config/business";
+import { pageMetadata } from "@/lib/seo";
+
+export const metadata: Metadata = pageMetadata({
+  path: "/",
+  description: business.seo.description,
+});
 
 /**
  * Each section below the hero sits in its own Suspense boundary so React

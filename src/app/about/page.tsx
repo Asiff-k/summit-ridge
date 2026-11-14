@@ -7,11 +7,12 @@ import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { business } from "@/config/business";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: business.seo.pages.about.title,
-  description: business.seo.pages.about.description,
-};
+export const metadata: Metadata = pageMetadata({
+  path: "/about",
+  ...business.seo.pages.about,
+});
 
 export default function AboutPage() {
   const { about } = business;

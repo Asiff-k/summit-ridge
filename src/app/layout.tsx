@@ -8,6 +8,7 @@ import { Header } from "@/components/layout/Header";
 import { MobileCallBar } from "@/components/layout/MobileCallBar";
 import { SiteEffects } from "@/components/SiteEffects";
 import { business } from "@/config/business";
+import { baseOpenGraph } from "@/lib/seo";
 import "./globals.css";
 
 const inter = Inter({
@@ -33,13 +34,9 @@ export const metadata: Metadata = {
   },
   description: seo.description,
   openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: seo.siteUrl,
-    siteName: business.name,
+    ...baseOpenGraph,
     title: seo.title,
     description: seo.description,
-    images: [{ url: business.hero.image.src, alt: business.hero.image.alt }],
   },
 };
 

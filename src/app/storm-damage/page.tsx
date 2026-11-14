@@ -10,11 +10,12 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { business } from "@/config/business";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: business.seo.pages.stormDamage.title,
-  description: business.seo.pages.stormDamage.description,
-};
+export const metadata: Metadata = pageMetadata({
+  path: "/storm-damage",
+  ...business.seo.pages.stormDamage,
+});
 
 export default function StormDamagePage() {
   const { stormDamage, stormAlert } = business;

@@ -7,11 +7,12 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { ServiceCards } from "@/components/sections/ServicesGrid";
 import { business } from "@/config/business";
+import { pageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: business.seo.pages.services.title,
-  description: business.seo.pages.services.description,
-};
+export const metadata: Metadata = pageMetadata({
+  path: "/services",
+  ...business.seo.pages.services,
+});
 
 export default function ServicesPage() {
   const { servicesPage, processSection, process } = business;
