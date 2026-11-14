@@ -11,6 +11,7 @@ type AiCallConfig = Business["aiCall"];
 
 const LINE_DELAY_MS = 1900;
 const HOLD_AT_END_MS = 4500;
+const INITIAL_LINES = 2;
 
 /**
  * Phone mock-up that plays a looping demo transcript of the AI receptionist
@@ -21,9 +22,11 @@ const HOLD_AT_END_MS = 4500;
 export function AiCallCard({ config }: { config: AiCallConfig }) {
   const reducedMotion = useReducedMotion();
   const total = config.transcript.length + 1; // lines, then the outcome row
-  const [count, setCount] = useState(1);
+  // The first two lines are there from the start, so the card never looks empty.
+  const [count, setCount] = useState(Math.min(INITIAL_LINES, total));
   const [paused, setPaused] = useState(false);
   const [inView, setInView] = useState(false);
+  const [started, setStarted] = useState(false);
   const frame = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -36,15 +39,28 @@ export function AiCallCard({ config }: { config: AiCallConfig }) {
     return () => observer.disconnect();
   }, []);
 
+  // Start the loop only once the card is on screen and the browser is idle.
   useEffect(() => {
-    if (reducedMotion || paused || !inView) return;
+    if (!inView || started) return;
+    if ("requestIdleCallback" in window) {
+      const handle = window.requestIdleCallback(() => setStarted(true), {
+        timeout: 2000,
+      });
+      return () => window.cancelIdleCallback(handle);
+    }
+    const timer = setTimeout(() => setStarted(true), 300);
+    return () => clearTimeout(timer);
+  }, [inView, started]);
+
+  useEffect(() => {
+    if (reducedMotion || paused || !inView || !started) return;
     const atEnd = count >= total;
     const timer = window.setTimeout(
-      () => setCount(atEnd ? 1 : count + 1),
+      () => setCount(atEnd ? Math.min(INITIAL_LINES, total) : count + 1),
       atEnd ? HOLD_AT_END_MS : LINE_DELAY_MS,
     );
     return () => window.clearTimeout(timer);
-  }, [count, total, paused, inView, reducedMotion]);
+  }, [count, total, paused, inView, started, reducedMotion]);
 
   const shown = reducedMotion ? total : count;
   const lines = config.transcript.slice(0, shown);

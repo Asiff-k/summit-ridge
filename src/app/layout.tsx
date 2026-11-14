@@ -6,6 +6,7 @@ import { ChatSlot } from "@/components/layout/ChatSlot";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { MobileCallBar } from "@/components/layout/MobileCallBar";
+import { SiteEffects } from "@/components/SiteEffects";
 import { business } from "@/config/business";
 import "./globals.css";
 
@@ -63,6 +64,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
         <MobileCallBar />
         <ChatSlot />
         <JsonLd />
+        <SiteEffects />
       </body>
     </html>
   );

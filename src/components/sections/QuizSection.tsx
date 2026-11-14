@@ -1,5 +1,5 @@
+import { LazyRoofQuiz } from "@/components/lazy/widgets";
 import { Reveal } from "@/components/Reveal";
-import { RoofQuiz } from "@/components/RoofQuiz";
 import { SectionHeading } from "@/components/SectionHeading";
 import { business } from "@/config/business";
 
@@ -12,8 +12,8 @@ export function QuizSection() {
         <Reveal>
           <SectionHeading eyebrow={quiz.eyebrow} heading={quiz.heading} text={quiz.text} />
         </Reveal>
-        <div className="[&>div]:bg-background">
-          <RoofQuiz config={quiz} />
+        <div className="[&>div>*]:bg-background">
+          <LazyRoofQuiz config={quiz} />
         </div>
       </div>
     </section>

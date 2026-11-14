@@ -1,19 +1,21 @@
-"use client";
-
-import type { MouseEvent, ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import {
   buttonClasses,
   textLinkClass,
   type ButtonVariant,
 } from "@/components/button-styles";
-import { BOOKING_ANCHOR, openBooking } from "@/lib/prefill-store";
+import { BOOKING_ANCHOR } from "@/lib/prefill-store";
 import { cn } from "@/lib/utils";
 
 /**
  * Opens the booking widget, optionally with the service or address filled in.
- * It is a real link to /#book, so it still works without JavaScript and from
- * pages that have no widget of their own.
+ *
+ * It renders a plain link to /#book with data attributes and has no JavaScript
+ * of its own. One delegated click handler in SiteEffects.tsx picks up
+ * [data-book] links and opens the widget in place when it is on the page.
+ * Without JavaScript, or from a page with no widget, the link simply
+ * navigates to the home page booking section.
  */
 export function BookButton({
   service,
@@ -28,20 +30,12 @@ export function BookButton({
   className?: string;
   children: ReactNode;
 }) {
-  function handleClick(event: MouseEvent<HTMLAnchorElement>) {
-    const prefill = {
-      ...(service ? { service } : {}),
-      ...(address ? { address } : {}),
-    };
-    // If the widget is on this page, jump to it. Otherwise fall through to
-    // the link, and the stashed prefill is picked up on the home page.
-    if (openBooking(prefill)) event.preventDefault();
-  }
-
   return (
     <a
       href={`/#${BOOKING_ANCHOR}`}
-      onClick={handleClick}
+      data-book=""
+      data-service={service}
+      data-address={address}
       className={
         variant === "link"
           ? cn(textLinkClass, className)

@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
   images: {
+    // 60 is used for the hero photo, which sits under a dark overlay.
+    qualities: [60, 75],
     // Photo hosts used in src/config/business.ts.
     remotePatterns: [
       {

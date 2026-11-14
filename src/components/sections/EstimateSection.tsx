@@ -1,6 +1,6 @@
 import { EstimateForm } from "@/components/EstimateForm";
+import { LazyRoofEstimator } from "@/components/lazy/widgets";
 import { Reveal } from "@/components/Reveal";
-import { RoofEstimator } from "@/components/RoofEstimator";
 import { SectionHeading } from "@/components/SectionHeading";
 import { business } from "@/config/business";
 import { ESTIMATE_ANCHOR } from "@/lib/prefill-store";
@@ -37,8 +37,8 @@ export function EstimateSection() {
               text={estimator.text}
             />
           </Reveal>
-          <div className="mt-8 [&>div]:bg-background">
-            <RoofEstimator config={estimator} />
+          <div className="mt-8 [&>div>*]:bg-background">
+            <LazyRoofEstimator config={estimator} />
           </div>
         </div>
       </div>

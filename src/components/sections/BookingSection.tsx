@@ -1,5 +1,4 @@
-import { AiCallCard } from "@/components/AiCallCard";
-import { BookingWidget } from "@/components/BookingWidget";
+import { LazyAiCallCard, LazyBookingWidget } from "@/components/lazy/widgets";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { business } from "@/config/business";
@@ -25,7 +24,7 @@ export function BookingSection() {
             />
           </Reveal>
           <div className="mt-8">
-            <BookingWidget
+            <LazyBookingWidget
               config={booking}
               services={services.map((service) => service.name)}
             />
@@ -39,7 +38,7 @@ export function BookingSection() {
             <p className="mt-2 text-muted-foreground">{aiCall.text}</p>
           </Reveal>
           <div className="mt-8">
-            <AiCallCard config={aiCall} />
+            <LazyAiCallCard config={aiCall} />
           </div>
         </div>
       </div>

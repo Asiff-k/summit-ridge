@@ -1,8 +1,8 @@
 import { MapPin } from "lucide-react";
 
+import { LazyZipChecker } from "@/components/lazy/widgets";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
-import { ZipChecker } from "@/components/ZipChecker";
 import { business } from "@/config/business";
 
 export function ServiceAreas() {
@@ -20,7 +20,7 @@ export function ServiceAreas() {
         </Reveal>
 
         <Reveal className="grid gap-6">
-          <ZipChecker config={coverage} />
+          <LazyZipChecker config={coverage} />
 
           <ul className="grid grid-cols-2 border-t border-l border-border sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
             {serviceAreas.map((city) => (

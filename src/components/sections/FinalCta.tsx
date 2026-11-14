@@ -1,5 +1,5 @@
-import { BookingWidget } from "@/components/BookingWidget";
 import { CallTextButtons } from "@/components/ButtonLink";
+import { LazyBookingWidget } from "@/components/lazy/widgets";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { business } from "@/config/business";
@@ -27,7 +27,7 @@ export function FinalCta({ anchor = BOOKING_ANCHOR }: { anchor?: string }) {
           </div>
         </Reveal>
 
-        <BookingWidget
+        <LazyBookingWidget
           config={booking}
           services={services.map((service) => service.name)}
         />

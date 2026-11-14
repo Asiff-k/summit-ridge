@@ -1,4 +1,4 @@
-import { BeforeAfter } from "@/components/BeforeAfter";
+import { LazyBeforeAfter } from "@/components/lazy/widgets";
 import { Reveal } from "@/components/Reveal";
 import { SectionHeading } from "@/components/SectionHeading";
 import { business } from "@/config/business";
@@ -22,7 +22,7 @@ export function Projects() {
             <li key={`${project.neighborhood}-${project.jobType}`}>
               <Reveal index={index % 3}>
                 <figure>
-                  <BeforeAfter
+                  <LazyBeforeAfter
                     before={project.before}
                     after={project.after}
                     beforeLabel={projects.beforeLabel}

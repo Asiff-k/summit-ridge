@@ -17,6 +17,9 @@ export function Hero() {
         alt=""
         fill
         sizes="100vw"
+        quality={60}
+        // The LCP image. Next.js 16 deprecates `priority`; eager loading with a
+        // high fetch priority is the documented replacement.
         loading="eager"
         fetchPriority="high"
         className="-z-20 object-cover"
